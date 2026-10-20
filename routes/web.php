@@ -12,6 +12,10 @@ use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\Inventory\StockAdjustmentController;
 use App\Http\Controllers\Inventory\StockMovementController;
+use App\Http\Controllers\Materials\MaterialAdjustmentController;
+use App\Http\Controllers\Materials\MaterialController;
+use App\Http\Controllers\Materials\MaterialCategoryController;
+use App\Http\Controllers\Materials\MaterialUnitController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,6 +50,23 @@ Route::middleware('auth')->prefix('inventory')->name('inventory.')->group(functi
         ->name('adjustments.create');
     Route::post('adjustments', [StockAdjustmentController::class, 'store'])->name('adjustments.store');
     Route::get('movements', [StockMovementController::class, 'index'])->name('movements.index');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('materials/adjustments', [MaterialAdjustmentController::class, 'index'])
+        ->name('materials.adjustments.index');
+    Route::get('materials/{material}/adjust', [MaterialAdjustmentController::class, 'create'])
+        ->name('materials.adjustments.create');
+    Route::post('materials/adjustments', [MaterialAdjustmentController::class, 'store'])
+        ->name('materials.adjustments.store');
+
+    Route::resource('materials', MaterialController::class)->except(['show']);
+    Route::post('materials/{material}/toggle-status', [MaterialController::class, 'toggleStatus'])
+        ->name('materials.toggle-status');
+    Route::resource('categories', MaterialCategoryController::class)
+        ->except(['show', 'destroy']);
+    Route::resource('units', MaterialUnitController::class)
+        ->except(['show', 'destroy']);
 });
 
 Route::middleware('auth')->get('media/{media}', [MediaController::class, 'show'])

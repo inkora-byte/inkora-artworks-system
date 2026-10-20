@@ -57,6 +57,18 @@
                     <i class="fa-solid fa-sliders me-2"></i> Adjustments
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}"
+                href="{{ route('categories.index') }}">
+                    <i class="fa-solid fa-layer-group"></i> Categories
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('units.*') ? 'active' : '' }}"
+                href="{{ route('units.index') }}">
+                    <i class="fa-solid fa-ruler"></i> Units
+                </a>
+            </li>
         @endcan
 
         @can('manage-purchasing')

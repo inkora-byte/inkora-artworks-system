@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             RoleAndPermissionSeeder::class,
             SettingSeeder::class,
             AdjustmentReasonSeeder::class,
+            MaterialCategorySeeder::class,
+            MaterialUnitSeeder::class,
         ]);
 
         // Local-only sample data — never runs in production, regardless

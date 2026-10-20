@@ -52,6 +52,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Product::class, ProductPolicy::class);
         Gate::policy(StockMovement::class, StockMovementPolicy::class);
         Gate::policy(Material::class, MaterialPolicy::class);
+        Gate::policy(\App\Models\MaterialCategory::class, \App\Policies\MaterialCategoryPolicy::class);
+        Gate::policy(\App\Models\MaterialUnit::class, \App\Policies\MaterialUnitPolicy::class);
 
         // Morph map for polymorphic relationships (Milestone 2.1) — see
         // that milestone's notes on why this is morphMap(), not

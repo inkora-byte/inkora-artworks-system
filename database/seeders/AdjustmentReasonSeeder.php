@@ -28,7 +28,7 @@ class AdjustmentReasonSeeder extends Seeder
      * @var array<int, array{name: string, applies_to: string}>
      */
     private const REASONS = [
-        ['name' => 'Initial Stock / Opening Balance', 'applies_to' => 'product'],
+        ['name' => 'Initial Stock / Opening Balance', 'applies_to' => 'both'],
         ['name' => 'Test Print / Sample', 'applies_to' => 'material'],
         ['name' => 'Damaged / Wasted', 'applies_to' => 'both'],
         ['name' => 'Given Away', 'applies_to' => 'both'],

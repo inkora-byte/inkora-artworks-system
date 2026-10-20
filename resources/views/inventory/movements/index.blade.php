@@ -9,9 +9,9 @@
         <div class="card-body">
             <form method="GET" action="{{ route('inventory.movements.index') }}" class="row g-2 align-items-end">
                 <div class="col-md-4">
-                    <label for="product_variant_id" class="form-label">Filter by Item</label>
+                    <label for="product_variant_id" class="form-label">Filter by Product</label>
                     <select name="product_variant_id" id="product_variant_id" class="form-select" onchange="this.form.submit()">
-                        <option value="">All items</option>
+                        <option value="">All products</option>
                         @foreach ($variants as $variant)
                             <option value="{{ $variant->id }}" {{ request('product_variant_id') == $variant->id ? 'selected' : '' }}>
                                 {{ $variant->sku }} — {{ $variant->product->name }}
@@ -19,7 +19,18 @@
                         @endforeach
                     </select>
                 </div>
-                @if (request('product_variant_id'))
+                <div class="col-md-4">
+                    <label for="material_id" class="form-label">Filter by Material</label>
+                    <select name="material_id" id="material_id" class="form-select" onchange="this.form.submit()">
+                        <option value="">All materials</option>
+                        @foreach ($materials as $material)
+                            <option value="{{ $material->id }}" {{ request('material_id') == $material->id ? 'selected' : '' }}>
+                                {{ $material->sku }} — {{ $material->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                @if (request('product_variant_id') || request('material_id'))
                     <div class="col-md-2">
                         <a href="{{ route('inventory.movements.index') }}" class="btn btn-outline-secondary">Clear Filter</a>
                     </div>
@@ -58,10 +69,10 @@
                                 <x-status-badge :status="$movement->type->label()" color="secondary" />
                             </td>
                             <td class="{{ $movement->quantity_change >= 0 ? 'text-success' : 'text-danger' }}">
-                                {{ $movement->quantity_change >= 0 ? '+' : '' }}{{ (int) $movement->quantity_change }}
+                                {{ $movement->quantity_change >= 0 ? '+' : '' }}{{ (float) $movement->quantity_change }}
                             </td>
-                            <td>{{ (int) $movement->quantity_before }}</td>
-                            <td>{{ (int) $movement->quantity_after }}</td>
+                            <td>{{ (float) $movement->quantity_before }}</td>
+                            <td>{{ (float) $movement->quantity_after }}</td>
                             <td>{{ $movement->adjustmentReason->name ?? '—' }}</td>
                             <td>{{ $movement->creator->name ?? '—' }}</td>
                         </tr>
